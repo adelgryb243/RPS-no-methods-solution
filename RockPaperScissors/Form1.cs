@@ -39,13 +39,8 @@ namespace RockPaperScissors
 
             g = this.CreateGraphics();
         }
-
-        private void rockButton_Click(object sender, EventArgs e)
+        public void ComputerTurn()
         {
-            //set player choice
-            playerChoice = "rock";
-
-            //determine and set cpu choice. display cpu image
             int randValue = randGen.Next(1, 4);
 
             if (randValue == 1)
@@ -63,31 +58,60 @@ namespace RockPaperScissors
                 cpuChoice = "scissors";
                 g.DrawImage(scissorImage, 360, 70, 168, 280);
             }
+        }
+       
+        public void DetermineWinner(String cpuChoice, String playerChoice)
+        {
+              if (playerChoice == cpuChoice)
+              {
+                g.DrawImage(tieImage, 225, 5, 250, 150);
+                ties++;
+                tiesLabel.Text = "Ties: " + ties;
+              }
+
+            switch(playerChoice)
+            {
+                case "scissors": 
+                    if (cpuChoice == "rock")
+                    YouLose();
+                break;
+                case "rock":
+                    if(cpuChoice == "paper")
+                   YouLose();
+                break;
+                case "paper":
+                    if(cpuChoice == "scissors")
+                    YouLose();
+                break;
+            }
+        }
+        public void YouLose()
+        {
+             g.DrawImage(loseImage, 225, 5, 250, 150);
+             losses++;
+             lossesLabel.Text = "Losses: " + losses;
+        }
+           
+        public void YouWin()
+        {
+             g.DrawImage(winImage, 225, 5, 250, 150);
+             wins++;
+             winsLabel.Text = "Wins: " + wins;
+        }
+        
+        private void rockButton_Click(object sender, EventArgs e)
+        {
+            //set player choice
+            playerChoice = "rock";
+
+           ComputerTurn();
 
             //play sound and display player choice image
             jabPlayer.Play();
             g.DrawImage(rockImage, 168, 70, 168, 280);
             Thread.Sleep(1000);
 
-            //determine who the winner is and display result
-            if (playerChoice == cpuChoice)
-            {
-                g.DrawImage(tieImage, 225, 5, 250, 150);
-                ties++;
-                tiesLabel.Text = "Ties: " + ties;
-            }
-            else if (cpuChoice == "paper")
-            {
-                g.DrawImage(loseImage, 225, 5, 250, 150);
-                losses++;
-                lossesLabel.Text = "Losses: " + losses;
-            }
-            else
-            {
-                g.DrawImage(winImage, 225, 5, 250, 150);
-                wins++;
-                winsLabel.Text = "Wins: " + wins;
-            }
+            DetermineWinner();
 
             gongPlayer.Play();
             Thread.Sleep(3000);
@@ -99,49 +123,14 @@ namespace RockPaperScissors
             //set player choice
             playerChoice = "paper";
 
-            //determine and set cpu choice. display cpu image
-            int randValue = randGen.Next(1, 4);
-
-            if (randValue == 1)
-            {
-                cpuChoice = "rock";
-                g.DrawImage(rockImage, 360, 70, 168, 280);
-            }
-            else if (randValue == 2)
-            {
-                cpuChoice = "paper";
-                g.DrawImage(paperImage, 360, 70, 168, 280);
-            }
-            else
-            {
-                cpuChoice = "scissors";
-                g.DrawImage(scissorImage, 360, 70, 168, 280);
-            }
+            ComputerTurn();
 
             //play sound and display player choice image
             g.DrawImage(paperImage, 168, 70, 168, 280);
             jabPlayer.Play();
             Thread.Sleep(1000);
 
-            //determine who the winner is and display result
-            if (playerChoice == cpuChoice)
-            {
-                g.DrawImage(tieImage, 225, 5, 250, 150);
-                ties++;
-                tiesLabel.Text = "Ties: " + ties;
-            }
-            else if (cpuChoice == "scissors")
-            {
-                g.DrawImage(loseImage, 225, 5, 250, 150);
-                losses++;
-                lossesLabel.Text = "Losses: " + losses;
-            }
-            else
-            {
-                g.DrawImage(winImage, 225, 5, 250, 150);
-                wins++;
-                winsLabel.Text = "Wins: " + wins;
-            }
+           DetermineWinner();
 
             gongPlayer.Play();
             Thread.Sleep(3000);
@@ -153,49 +142,14 @@ namespace RockPaperScissors
             //set player choice
             playerChoice = "scissors";
 
-            //determine and set cpu choice. display cpu image
-            int randValue = randGen.Next(1, 4);
-
-            if (randValue == 1)
-            {
-                cpuChoice = "rock";
-                g.DrawImage(rockImage, 360, 70, 168, 280);
-            }
-            else if (randValue == 2)
-            {
-                cpuChoice = "paper";
-                g.DrawImage(paperImage, 360, 70, 168, 280);
-            }
-            else
-            {
-                cpuChoice = "scissors";
-                g.DrawImage(scissorImage, 360, 70, 168, 280);
-            }
+            ComputerTurn();
 
             //play sound and display player choice image
             jabPlayer.Play();
             g.DrawImage(scissorImage, 168, 70, 168, 280);
             Thread.Sleep(1000);
 
-            //determine who the winner is and display result
-            if (playerChoice == cpuChoice)
-            {
-                g.DrawImage(tieImage, 225, 5, 250, 150);
-                ties++;
-                tiesLabel.Text = "Ties: " + ties;
-            }
-            else if (cpuChoice == "rock")
-            {
-                g.DrawImage(loseImage, 225, 5, 250, 150);
-                losses++;
-                lossesLabel.Text = "Losses: " + losses;
-            }
-            else
-            {
-                g.DrawImage(winImage, 225, 5, 250, 150);
-                wins++;
-                winsLabel.Text = "Wins: " + wins;
-            }
+            DetermineWinner();
 
             gongPlayer.Play();
             Thread.Sleep(3000);
